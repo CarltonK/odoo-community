@@ -1,5 +1,5 @@
 ## Requirements
-1. Ensure you have docker, docker-compose and make installed. Preferably on a Linux.
+Ensure you have docker, docker-compose and make installed. Preferably on a Linux.
 
 ## Starting up odoo
 ```make build``` if it's your first time, otherwise ```make run```
