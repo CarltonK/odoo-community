@@ -1,0 +1,44 @@
+version: '3.6'
+
+services:
+  odoo-db:
+    image: postgres:14
+    container_name: odoo-db
+    environment:
+      POSTGRES_DB: odoo-pg
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_USER: odoo
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data
+    networks:
+      odoo_network:
+        ipv4_address: 172.35.0.2
+  odoo-app:
+    image: odoo:16.0
+    container_name: odoo-app
+    command: ["odoo", "-d", "odoo", "-i", "base"]
+    depends_on:
+      - odoo-db
+    ports:
+      - 8069:8069
+    environment:
+     HOST: odoo-db
+     PORT: 5432
+     USER: odoo
+     PASSWORD: odoo
+    volumes:
+      - odoo-data:/var/lib/odoo
+      - odoo-addons:/mnt/extra-addons
+    networks:
+      odoo_network:
+        ipv4_address: 172.35.0.3
+volumes:
+  odoo-db-data:
+  odoo-data:
+  odoo-addons:
+networks:
+  odoo_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.35.0.0/16
