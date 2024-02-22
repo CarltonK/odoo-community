@@ -14,7 +14,7 @@ services:
       odoo_network:
         ipv4_address: 172.35.0.2
   odoo-app:
-    image: odoo:16.0
+    image: odoo:17.0
     container_name: odoo-app
     command: ["odoo", "-d", "odoo", "-i", "base"]
     depends_on:
